@@ -5,32 +5,23 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Party extends Authenticatable
 {
     use Notifiable;
     
     // No timestamp
     public $timestamps = false;
-
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'username', 'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
+        'name', 'colour', 'avatar',
     ];
     
     public function party() {
-        return $this->belongsTo(Party::class);
+        return $this->hasMany(User::class);
     }
 }
