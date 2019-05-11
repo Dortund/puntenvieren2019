@@ -19,51 +19,7 @@ use App\User;
 				<label for="motion_id" class="col-sm-4 col-form-label text-md-right">Motion</label>
 
 				<div class="col-md-6">
-					<select id="motion_id" class="form-control @if($errors->has('motion_id')) is-invalid @endif" name="motion_id" required autofocus>
-					@if (!isset($vote->motion_id))
-						<option selected value="">No Motion Selected</option>
-					@endif
-					
-					@foreach(App\Motion::all() as $motion)
-						<option
-							value="{{$motion->id}}"
-							{{ isset($vote->motion_id) && $vote->motion_id == $motion->id ? "selected" : "" }}>
-							{{ $motion->text }}
-						</option>
-					@endforeach
-					</select>
-
-					@if ($errors->has('motion_id'))
-						<span class="invalid-feedback">
-							<strong>{{ $errors->first('motion_id') }}</strong>
-						</span>
-					@endif
-				</div>
-			</div>
-
-			<div class="form-group row">
-				<label for="party_id" class="col-sm-4 col-form-label text-md-right">Party</label>
-
-				<div class="col-md-6">
-					<select id="party_id" class="form-control @if($errors->has('party_id')) is-invalid @endif" name="party_id" required>
-					@if (!isset($vote->party_id))
-						<option selected value="">No Party Selected</option>
-					@endif
-					
-					@foreach(App\Party::all() as $party)
-						<option
-							value="{{$party->id}}"
-							{{ isset($vote->party_id) && $vote->party_id == $party->id ? "selected" : "" }}>
-							{{ $party->name }}
-						</option>
-					@endforeach
-					</select>
-
-					@if ($errors->has('party_id'))
-						<span class="invalid-feedback">
-							<strong>{{ $errors->first('party_id') }}</strong>
-						</span>
-					@endif
+					<label>{{$motion->text}}</label>
 				</div>
 			</div>
 
@@ -72,18 +28,15 @@ use App\User;
 
 				<div class="col-md-6">
 					<select id="vote_value" class="form-control @if($errors->has('vote_value')) is-invalid @endif" name="vote_value" required>
-					@if (!isset($vote->vote_value))
-						<option selected value="">New Vote Being Made</option>
-					@endif
-					
 					@foreach(App\DefaultVote::all() as $defVote)
 						<option
 							value="{{$defVote->value}}"
-							{{ isset($vote->vote_value) && $vote->vote_value == $defVote->value ? "selected" : "" }}>
+							{{ (isset($vote->vote_value) && $vote->vote_value == $defVote->value) || (!isset($vote->vote_value) && $defVote->value == -2) ? "selected" : "" }}>
 							{{ $defVote->name }}
 						</option>
 					@endforeach
 					
+					@if ($motion->vote_value_type == 1)
 						<option
 							value="1"
 							{{ $vote->vote_value === "1" ? "selected" : "" }}>
@@ -94,6 +47,7 @@ use App\User;
 							{{ $vote->vote_value === "0" ? "selected" : "" }}>
 							Tegen
 						</option>
+					@elseif ($motion->vote_value_type == 2)
     					@foreach(App\Party::all() as $party)
     						<option
     							value="{{$party->id}}"
@@ -101,6 +55,7 @@ use App\User;
     							{{ $party->name }}
     						</option>
     					@endforeach
+					@endif
 					</select>
 
 					@if ($errors->has('party_id'))

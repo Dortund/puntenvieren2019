@@ -18,7 +18,6 @@ class CreatePartiesTable extends Migration
             $table->string('name');
             $table->string('colour');
             $table->string('avatar');
-            $table->timestamps();
         });
     }
 

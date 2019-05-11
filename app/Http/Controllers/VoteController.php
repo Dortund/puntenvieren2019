@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Motion;
 use App\Vote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 
 class VoteController extends Controller
 {
@@ -18,10 +22,56 @@ class VoteController extends Controller
             'update',
             'destroy',
         ]);
+        
+        $this->middleware('can:has-party')->only([
+            'currentVote',
+            'storeCurrent',
+        ]);
     }
     
     public function currentVote() {
-        dd(date('m/d/Y h:i:s a', time()));
+        $motion = Motion::currentMotion();
+        $vote = Vote::where([
+            ['motion_id', '=', $motion->id],
+            ['party_id', '=', Auth::user()->party->id]
+        ])->first();
+        
+        return view('votes.partyVote')
+        ->with('vote', $vote)
+        ->with('motion', $motion)
+        ->with('method', 'POST')
+        ->with('route', route('storeCurrent', [$vote]))
+        ->with('submitBtn', 'Stem opslaan');
+    }
+    
+    public function storeCurrent(Request $request, Vote $vote) {
+        $motion = Motion::currentMotion();
+        $request->validate([
+            'vote_value'    => 'required',
+            //'motion_id'     => ['required', Rule::in([$motion->id])],
+        ]);
+        
+        if ($motion->id != $request->input('motion_id')) {
+            Redirect::back()->withErrors('Voor deze motie werdt niet meer gestemd');
+        }
+        
+        $origVote = Vote::where([
+            ['motion_id', '=', $motion->id],
+            ['party_id', '=', Auth::user()->party->id]
+        ])->first();
+        
+        if (isset($origVote)) {
+           $origVote->vote_value = $request->input('vote_value');
+           $origVote->save();
+        }
+        else {
+            $vote->motion_id = $motion->id;
+            $vote->party_id = Auth::user()->party->id;
+            $vote->vote_value = $request->input('vote_value');
+            $vote->save();
+        }
+        
+        return redirect()->route('currentVote')->with('messages', ['Stem succesvol opgeslagen']);
     }
     
     /**
