@@ -25,6 +25,7 @@ Route::get('/seatData', 'SeatController@getSeatData')->name('seatData');
 
 Route::middleware('auth')->group(function() {
     Route::get('/currentVote', 'VoteController@currentVote')->name('currentVote');
+    Route::post('/storeCurrent', 'VoteController@storeCurrent')->name('storeCurrent');
 });
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function() {
