@@ -23,6 +23,10 @@ Auth::routes(['register'=>false, 'verify'=> false, 'reset'=> false]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/seatData', 'SeatController@getSeatData')->name('seatData');
 
+Route::middleware('auth')->group(function() {
+    Route::get('/currentVote', 'VoteController@currentVote')->name('currentVote');
+});
+
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function() {
     Route::resource('users', 'UserController');
     Route::resource('multipliers', 'MultiplierController');
