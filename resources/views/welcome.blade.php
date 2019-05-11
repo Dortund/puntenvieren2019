@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="{{ asset('js/d3.min.js') }}"></script>
         <script src="{{ asset('js/d3-parliament.js') }}"></script>
 
         <title>Puntenvieren 2019</title>

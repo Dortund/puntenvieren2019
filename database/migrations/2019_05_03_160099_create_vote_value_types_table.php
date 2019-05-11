@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMotionsTable extends Migration
+class CreateVoteValueTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateMotionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('motions', function (Blueprint $table) {
+        Schema::create('vote_value_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('text');
-            $table->dateTime('time_of_vote');
-            $table->unsignedBigInteger('vote_value_type');
-            
-            $table->foreign('vote_value_type')->references('id')->on('vote_value_types');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +27,6 @@ class CreateMotionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('motion');
+        Schema::dropIfExists('vote_value_types');
     }
 }
