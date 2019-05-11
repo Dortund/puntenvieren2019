@@ -31,28 +31,52 @@ class VoteController extends Controller
     
     public function currentVote() {
         $motion = Motion::currentMotion();
-        $vote = Vote::where([
-            ['motion_id', '=', $motion->id],
-            ['party_id', '=', Auth::user()->party->id]
-        ])->first();
         
-        return view('votes.partyVote')
-        ->with('vote', $vote)
-        ->with('motion', $motion)
-        ->with('method', 'POST')
-        ->with('route', route('storeCurrent', [$vote]))
-        ->with('submitBtn', 'Stem opslaan');
+        if (isset($motion)) {
+            $vote = Vote::where([
+                ['motion_id', '=', $motion->id],
+                ['party_id', '=', Auth::user()->party->id]
+            ])->first();
+            
+            return view('votes.currentVote')
+            ->with('vote', $vote)
+            ->with('motion', $motion);
+        }
+        else {
+            return view('votes.currentVote');
+        }
+        
+    }
+    
+    public function changeVote() {
+        $motion = Motion::currentMotion();
+        
+        if (isset($motion)) {
+            $vote = Vote::where([
+                ['motion_id', '=', $motion->id],
+                ['party_id', '=', Auth::user()->party->id]
+            ])->first();
+            
+            return view('votes.partyVote')
+            ->with('vote', $vote)
+            ->with('motion', $motion)
+            ->with('method', 'POST')
+            ->with('route', route('storeCurrent', [$vote]))
+            ->with('submitBtn', 'Stem opslaan');
+        }
+        else {
+            return redirect()->route('currentVote');
+        }
     }
     
     public function storeCurrent(Request $request, Vote $vote) {
         $motion = Motion::currentMotion();
         $request->validate([
             'vote_value'    => 'required',
-            //'motion_id'     => ['required', Rule::in([$motion->id])],
         ]);
         
-        if ($motion->id != $request->input('motion_id')) {
-            Redirect::back()->withErrors('Voor deze motie werdt niet meer gestemd');
+        if (!isset($motion) || $motion->id != $request->input('motion_id')) {
+            return redirect()->route('currentVote')->with('messages', ['Voor deze motie werd niet meer gestemd']);
         }
         
         $origVote = Vote::where([

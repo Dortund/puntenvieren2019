@@ -25,6 +25,7 @@ Route::get('/seatData', 'SeatController@getSeatData')->name('seatData');
 
 Route::middleware('auth')->group(function() {
     Route::get('/currentVote', 'VoteController@currentVote')->name('currentVote');
+    Route::get('/changeVote', 'VoteController@changeVote')->name('changeVote');
     Route::post('/storeCurrent', 'VoteController@storeCurrent')->name('storeCurrent');
 });
 
