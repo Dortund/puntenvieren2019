@@ -1,0 +1,51 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: app
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    networks:
+      - app-network
+    volumes:
+      - .env-docker:/var/www/.env
+
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: webserver
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+  db:
+    build:
+      context: ./mysql
+    container_name: db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: puntenvieren2019
+      MYSQL_USER: laraveluser
+      MYSQL_PASSWORD: mysql_user_password
+      MYSQL_ROOT_PASSWORD: mysqk_root_password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-network
+    volumes:
+      - dbdata:/var/lib/mysql
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
