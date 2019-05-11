@@ -1,0 +1,53 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: app-dev
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    networks:
+      - app-network
+    volumes:
+      - ./:/var/www
+      - .env-docker:/var/www/.env
+
+  webserver:
+    image: nginx
+    container_name: webserver-dev
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/app.conf:/etc/nginx/conf.d/app.conf
+    networks:
+      - app-network
+
+  db:
+    image: mysql:5.7
+    container_name: db-dev
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: puntenvieren2019
+      MYSQL_USER: laraveluser
+      MYSQL_PASSWORD: mysql_user_password
+      MYSQL_ROOT_PASSWORD: mysqk_root_password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-network
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
