@@ -16,15 +16,14 @@ use App\User;
 		{{ method_field($method) }}
 
 			<div class="form-group row">
-				<label for="motion_id" class="col-sm-4 col-form-label text-md-right">Motion</label>
+				<label for="motion_id" class="col-sm-4 col-form-label text-md-right">Motie:</label>
 
-				<div class="col-md-6">
-					<label>{{$motion->text}}</label>
-				</div>
+				<label class="col-md-6 col-form-label">{{$motion->text}}</label>
+				<input id="motion_id" type="hidden" name="motion_id" value="{{ isset($motion) ? $motion->id : old('motion_id') }}">
 			</div>
 
 			<div class="form-group row">
-				<label for="vote_value" class="col-sm-4 col-form-label text-md-right">Vote Value</label>
+				<label for="vote_value" class="col-sm-4 col-form-label text-md-right">Uw Stem:</label>
 
 				<div class="col-md-6">
 					<select id="vote_value" class="form-control @if($errors->has('vote_value')) is-invalid @endif" name="vote_value" required>
@@ -39,12 +38,12 @@ use App\User;
 					@if ($motion->vote_value_type == 1)
 						<option
 							value="1"
-							{{ $vote->vote_value === "1" ? "selected" : "" }}>
+							{{ isset($vote->vote_value) && $vote->vote_value === "1" ? "selected" : "" }}>
 							Voor
 						</option>
 						<option
 							value="0"
-							{{ $vote->vote_value === "0" ? "selected" : "" }}>
+							{{ isset($vote->vote_value) && $vote->vote_value === "0" ? "selected" : "" }}>
 							Tegen
 						</option>
 					@elseif ($motion->vote_value_type == 2)
