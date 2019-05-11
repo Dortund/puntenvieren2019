@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -12,15 +13,20 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        self::insert('admin', 'admin', 'admin');
-        self::insert('kielzog', 'Pirate Party', 'Kielzog');
+        self::insert('admin', 'admin', true);
+        
+        // TODO add other users for the parties
+        self::insert('kielzog', 'kielzog', false, 9);
     }
     
-    private function insert($name, $screenName, $password) {
-        DB::table('users')->insert([
-            'name' => $name,
-            'screenName' => $screenName,
-            'password' => bcrypt($password),
-        ]);
+    private function insert($username, $password, $is_admin, $party_id = null) {
+        if (!User::where('username', $username)->exists()) {
+            DB::table('users')->insert([
+                'username' => $username,
+                'password' => bcrypt($password),
+                'is_admin' => $is_admin,
+                'party_id' => $party_id,
+            ]);
+        }
     }
 }
