@@ -14,6 +14,11 @@ class Bestelling extends Model
 
     public $timestamps = false;
 
+    public function bon()
+    {
+        return $this->belongsTo('App\Barkas\Bon', 'Bestelling_Bon');
+    }
+
     public function prijs()
     {
         return $this->belongsTo('App\Barkas\Prijs', 'Bestelling_Wat');
