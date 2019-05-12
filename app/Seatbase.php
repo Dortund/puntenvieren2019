@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SeatBase extends Model
+class Seatbase extends Model
 {
-    //
+    public $timestamps = false;
 }

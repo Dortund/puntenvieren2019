@@ -17,7 +17,7 @@ class CreateSeatbasesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('party_id');
             $table->integer('seats');
-            $table->date('entry_added');
+            $table->dateTime('entry_added');
         });
     }
 
