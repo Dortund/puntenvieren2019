@@ -12,18 +12,18 @@ class PartiesTableSeeder extends Seeder
      */
     public function run()
     {
-        self::insert('H.I.C. Octopus');
-        self::insert('S.M.N. Kurk');
+        self::insert('Octopus');
+        self::insert('Kurk');
         self::insert('Quast');
         self::insert('Schranz');
         self::insert('Spetter');
-        self::insert(utf8_encode('Åsene'));
+        self::insert('Asene');
         self::insert('Apollo');
         self::insert('Chaos');
         self::insert('Kielzog');
-        self::insert('C.H.T. Krat!');
+        self::insert('Krat');
         self::insert('McClan');
-        self::insert('H.C. Nobel');
+        self::insert('Nobel');
         self::insert('Scorpios');
         self::insert('Fabula');
         self::insert('Bestuur 122');
