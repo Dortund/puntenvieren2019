@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:is-admin');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(2);
+        $users = User::paginate(20);
 
         return view('users.index')
             ->with('users', $users);
@@ -44,13 +49,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'        => 'required|unique:users|max:45',
-            'email'       => 'required|unique:users|max:191',
+            'username'    => 'required|unique:users|max:45',
             'password'    => 'required|max:191',
         ]);
 
         $user = new User($request->all());
         $user->password = Hash::make($request->input('password'));
+        $user->is_admin = false;
         $user->save();
 
         return redirect()->route('admin.users.index')->with('messages', [trans('admin/users.create.status-ok')]);
@@ -92,15 +97,14 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name'        => 'required|unique:users,name,' . $user->id . '|max:45',
-            'email'       => 'required|unique:users,email,' . $user->id . '|max:191',
+            'username'    => 'required|unique:users,username,' . $user->id . '|max:45',
             'password'    => 'required|max:191',
         ]);
 
-        $user = new User($request->all());
+        $user->fill($request->all());
         $user->password = Hash::make($request->input('password'));
         $user->update();
-
+        
         return redirect()->route('admin.users.index')->with('messages', [trans('admin/users.update.status-ok' )]);
     }
 

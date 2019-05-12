@@ -21,6 +21,23 @@ Route::get('/', function () {
 Auth::routes(['register'=>false, 'verify'=> false, 'reset'=> false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
 Route::get('/seatData', 'SeatController@getSeatData')->name('seatData');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/currentVote', 'VoteController@currentVote')->name('currentVote');
+    Route::get('/changeVote', 'VoteController@changeVote')->name('changeVote');
+    Route::post('/storeCurrent', 'VoteController@storeCurrent')->name('storeCurrent');
+});
+
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function() {
+    Route::resource('users', 'UserController');
+    Route::resource('multipliers', 'MultiplierController');
+    Route::resource('parties', 'PartyController');
+    Route::resource('seatmods', 'SeatmodController');
+    Route::resource('seatbase', 'SeatbaseController');
+    Route::resource('votes', 'VoteController');
+});
+
+Route::middleware('auth')->group(function() {
+    Route::resource('votes', 'VoteController');
+});
