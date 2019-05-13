@@ -33,7 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-						@if (Auth::user()->is_admin)
+						@if (isset(Auth::user()->is_admin) && Auth::user()->is_admin)
 							<li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.motions.index') }}">Motions</a>
                             </li>

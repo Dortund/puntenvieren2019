@@ -13,78 +13,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    	<style media="screen">
-            html, body {
-                width: 100%;
-                height: 100%;
-                padding: 0px;
-                margin: 0px;
-                background: white;
-            }
-            svg {
-                width: 100%;
-                height: 100%;
-            }
-            svg.seat {
-                cursor: pointer;
-                transition: all 800ms;
-            }
-            /* common */
-            svg .seat.vacant { fill: #FFFFFF }
-            svg .seat.no-party { fill: #909090 }
-        </style>
+        <link href="{{ asset('css/interface.css') }}" rel="stylesheet">
         <style id="seatColours"></style>
     </head>
     <body>
@@ -104,45 +33,22 @@
             @endif
 
             <div class="content">
-                <svg width="800" height="800"></svg>
+            	<div id="parliamentContainer">
+	                <svg width="600" height="300"></svg>
+	                <div id="motions">
+    	                <div style="font-weight:bold">Huidige Motie:</div>
+    	                <div id="motion">Er is nog geen motie om over te stemmen</div>
+    	                <p id="countdownTimer"></p>
+	                </div>
+                </div>
+                <div id="listContainer">
+                	<table id="listTable">
+                      <tr><td>Partij</td><td>Percentage</td></tr>
+                    </table>
+                </div>
             </div>
         </div>
         
-        <script type="text/javascript">
-                    var parliament = d3.parliament().width(800).height(800).innerRadiusCoef(0.4);
-                    parliament.enter.fromCenter(true).smallToBig(true);
-                    parliament.exit.toCenter(true).bigToSmall(true);
-                    parliament.on("click", function(e) { console.log(e); });
-        
-                    var setData = function(d) {
-						var parties = d['parties'];
-                        
-						// Get style tag for seat colours and remove it
-						document.getElementById("seatColours").remove();
-
-						// Create our new stylesheet
-						var style = document.createElement('style');
-						style.id = "seatColours";
-
-						for (var i = 0; i < parties.length; i++) {
-							var elem = parties[i];
-							style.innerHTML += 'svg .seat.' + elem['id'] + '{ fill: ' + elem['colour'] + ' }\n';
-						}
-
-						// Get the first script tag
-						var ref = document.querySelector('script');
-
-						// Insert our new styles before the first script tag
-						ref.parentNode.insertBefore(style, ref);
-
-                        // Update our parliament graph
-                        d3.select("svg").datum(parties).call(parliament);
-                    };
-        
-                    //d3.json("european.json", setData);
-                    d3.json(window.location.href + '/seatData', setData);
-        
-                    setInterval(function() { d3.json(window.location.href + '/seatData', setData); }, 6000000)
-                </script>
+        <script src="{{ asset('js/interface.js') }}"></script>
     </body>
 </html>

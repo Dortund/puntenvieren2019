@@ -40,7 +40,7 @@ class Party extends Authenticatable
         }
         else {
             //return 0;
-            return mt_rand(0, 10);
+            return mt_rand(0, 92);
         }
     }
     
