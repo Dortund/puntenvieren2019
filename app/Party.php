@@ -32,13 +32,26 @@ class Party extends Authenticatable
         return $this->hasMany(User::class);
     }
     
-    public function getSeatsAttribute($value)
+    public function getSeatsAttribute()
     {
         $seatbase = Seatbase::where('party_id', '=', $this->id)->orderBy('entry_added', 'desc')->first();
         if (isset($seatbase)) {
             return $seatbase->seats;
         }
         else {
+            //TODO remove rand
+            //return 0;
+            return mt_rand(0, 92);
+        }
+    }
+    
+    public function getSeatsAtTime($time) {
+        $seatbase = SeatBase::where('entry_added', '<', $time)->orderBy('entry_added', 'desc')->first();
+        if (isset($seatbase)) {
+            return $seatbase->seats;
+        }
+        else {
+            //TODO remove rand
             //return 0;
             return mt_rand(0, 92);
         }

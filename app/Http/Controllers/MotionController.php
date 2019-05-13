@@ -105,7 +105,7 @@ class MotionController extends Controller
         $request->validate([
             'text'    => 'required',
             'time_of_vote'    => 'required',
-            'vote_value_type' => 'required|exists:vote_value_ypes,id',
+            'vote_value_type' => 'required|exists:vote_value_types,id',
         ]);
         
         $motion->fill($request->all());

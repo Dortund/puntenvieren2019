@@ -25,7 +25,6 @@ var x = setInterval(function() {
 
   // If the count down is finished, write some text 
   if (distance < 0) {
-    clearInterval(x);
     document.getElementById("countdownTimer").innerHTML = "EXPIRED";
   }
 }, 1000);
@@ -82,7 +81,8 @@ var setData = function(d) {
 		cell = row.insertCell();
 		cell.innerHTML = (Math.round((elem.seats / 750) * 10000) / 100) + "%";
 	}
-
+	
+	// Update info for the current motion
 	if (d['motion'] == null) {
 		document.getElementById("motion").innerHTML = "Er is momenteel geen motie om over te stemmen";
 		document.getElementById("countdownTimer").style.display = "none";
@@ -92,7 +92,20 @@ var setData = function(d) {
 		countdownTarget = new Date(d['motion']['time_of_vote']).getTime();
 		document.getElementById("countdownTimer").style.display = "block";
 	}
-    
+	
+	// Update info for the previous motion
+	if (d['prevMotion'] == null) {
+		document.getElementById("prevMotion").innerHTML = "Er is geen voorgaande motie";
+	}
+	else {
+		document.getElementById("prevMotion").innerHTML = d['prevMotion']['text'];
+		if (d['results'] == null) {
+			// iets van 'de stemmen worden geteld'
+		}
+		else {
+			// geef resultaten
+		}
+	}
 };
 
 d3.json(window.location.href + '/seatData', setData);

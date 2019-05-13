@@ -22,7 +22,19 @@ class Motion extends Model
         return Motion::where('time_of_vote', '>', \DB::raw('NOW()'))->orderBy('time_of_vote', 'asc')->first();
     }
     
+    public static function previousMotion() {
+        return Motion::where('time_of_vote', '<', \DB::raw('NOW()'))->orderBy('time_of_vote', 'desc')->first();
+    }
+    
     public function voteValueType() {
         return $this->belongsTo(VoteValueType::class);
+    }
+    
+    public function results() {
+        return $this->hasMany(Result::class);
+    }
+    
+    public function votes() {
+        return $this->hasMany(Vote::class);
     }
 }
