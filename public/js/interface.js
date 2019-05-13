@@ -96,15 +96,39 @@ var setData = function(d) {
 	// Update info for the previous motion
 	if (d['prevMotion'] == null) {
 		document.getElementById("prevMotion").innerHTML = "Er is geen voorgaande motie";
+		document.getElementById("results").style.display = "none";
 	}
 	else {
 		document.getElementById("prevMotion").innerHTML = d['prevMotion']['text'];
+		
+		var conResults = document.getElementById("results");
+		
+		// Remove old data
+		var fc = conResults.firstChild;
+		while( fc ) {
+			conResults.removeChild( fc );
+		    fc = conResults.firstChild;
+		}
+		
+		// Add new results
 		if (d['results'] == null) {
-			// iets van 'de stemmen worden geteld'
+			var divres = document.createElement('div')
+			divres.innerHTML = 'De stemmen worden geteld';
+			
+			conResults.appendChild(divres);
 		}
 		else {
-			// geef resultaten
+			for (var i = 0; i < d['results'].length; i++) {
+				var res = d['results'][i];
+				var divres = document.createElement('div')
+				divres.className = 'resultBlock';
+				divres.innerHTML = '<div>' + res.vote_name + ':</div><div>' + res.seats + '</div>';
+				
+				conResults.appendChild(divres);
+			}
 		}
+		
+		conResults.style.display = "flex";
 	}
 };
 

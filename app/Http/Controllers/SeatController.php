@@ -20,7 +20,7 @@ class SeatController extends Controller
         $prevMotion = Motion::previousMotion();
         $results = null;
         if (isset($prevMotion)) {
-            $results = Result::where('motion_id', '=', $prevMotion->id)->orderBy('seats')->get();
+            $results = Result::where('motion_id', '=', $prevMotion->id)->orderBy('seats', 'desc')->get();
             $results = $results->toArray();
             
             $prevMotion = $prevMotion->toArray();
