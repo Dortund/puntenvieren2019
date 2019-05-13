@@ -33,6 +33,7 @@ class PartiesTableSeeder extends Seeder
     private function insert($name, $colour = '#00FF00', $avatar = '/') {
         DB::table('parties')->insert([
             'name' => $name,
+            'screenname' => $name,
             'colour' => $colour,
             'avatar' => $avatar,
         ]);

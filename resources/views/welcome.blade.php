@@ -115,6 +115,8 @@
                     parliament.on("click", function(e) { console.log(e); });
         
                     var setData = function(d) {
+						var parties = d['parties'];
+                        
 						// Get style tag for seat colours and remove it
 						document.getElementById("seatColours").remove();
 
@@ -122,8 +124,8 @@
 						var style = document.createElement('style');
 						style.id = "seatColours";
 
-						for (var i = 0; i < d.length; i++) {
-							var elem = d[i];
+						for (var i = 0; i < parties.length; i++) {
+							var elem = parties[i];
 							style.innerHTML += 'svg .seat.' + elem['id'] + '{ fill: ' + elem['colour'] + ' }\n';
 						}
 
@@ -134,13 +136,13 @@
 						ref.parentNode.insertBefore(style, ref);
 
                         // Update our parliament graph
-                        d3.select("svg").datum(d).call(parliament);
+                        d3.select("svg").datum(parties).call(parliament);
                     };
         
                     //d3.json("european.json", setData);
                     d3.json(window.location.href + '/seatData', setData);
         
-                    setInterval(function() { d3.json(window.location.href + '/seatData', setData); }, 5000)
+                    setInterval(function() { d3.json(window.location.href + '/seatData', setData); }, 6000000)
                 </script>
     </body>
 </html>

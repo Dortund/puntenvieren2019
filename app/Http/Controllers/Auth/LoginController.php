@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -60,5 +61,15 @@ class LoginController extends Controller
             'username' => "required|exists:users",
             'password' => 'required',
             ], $messages);
+    }
+    
+    protected function redirectTo()
+    {
+        if (Auth::user()->is_admin){
+            return route('admin.motions.index');
+        }else {
+            return route('currentVote');
+        }
+        
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Motion;
+use App\Party;
 use Illuminate\Http\Request;
 
 class SeatController extends Controller
@@ -16,7 +18,7 @@ class SeatController extends Controller
                         "seats": ' . $seats . ',
                         "colour":"#00FF00"
                     },
-{
+                    {
                         "id": "df",
                         "seats": ' . $seats2 . ',
                         "colour":"#0000FF"
@@ -27,6 +29,23 @@ class SeatController extends Controller
                         "colour":"#FF0000"
                     }
                 ]';
-        return response()->json(json_decode($data));
+        
+        //dd(Party::all()->toArray());
+        
+        $parties = Party::all()->toArray();
+        
+        $motion = Motion::currentMotion();
+        
+        if (isset($motion)) {
+            $motion = $motion->toArray();
+        }
+        
+        $res = ['motion' => $motion,
+                'parties' => $parties,
+        ];
+        
+        //return response()->json(json_decode($data));
+        //return response()->json(json_decode(Party::all()->toJson()));
+        return response()->json($res);
     }
 }
