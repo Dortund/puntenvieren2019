@@ -36,9 +36,18 @@
             	<div id="parliamentContainer">
 	                <svg width="600" height="300"></svg>
 	                <div id="motions">
-    	                <div style="font-weight:bold">Huidige Motie:</div>
-    	                <div id="motion">Er is nog geen motie om over te stemmen</div>
-    	                <p id="countdownTimer"></p>
+	                	<div>
+        	                <div style="font-weight:bold">Huidige Motie:</div>
+        	                <div id="motion">Er is nog geen motie om over te stemmen</div>
+        	                <div id="countdownTimer"></div>
+    	                </div>
+    	                <div>
+    	                	<div style="font-weight:bold">Vorige Motie:</div>
+        	                <div id="prevMotion">Er is geen voorgaande motie</div>
+        	                <div id="results" class="flex-container">
+        	                
+        	                </div>
+    	                </div>
 	                </div>
                 </div>
                 <div id="listContainer">
