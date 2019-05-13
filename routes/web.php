@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\SeatController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +35,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function() {
     Route::resource('parties', 'PartyController');
     Route::resource('seatmods', 'SeatmodController');
     Route::resource('seatbase', 'SeatbaseController');
-    Route::resource('votes', 'VoteController');
-});
-
-Route::middleware('auth')->group(function() {
+    Route::resource('motions', 'MotionController');
     Route::resource('votes', 'VoteController');
 });

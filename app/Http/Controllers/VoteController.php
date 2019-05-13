@@ -25,6 +25,7 @@ class VoteController extends Controller
         
         $this->middleware('can:has-party')->only([
             'currentVote',
+            'changeVote',
             'storeCurrent',
         ]);
     }
@@ -134,8 +135,8 @@ class VoteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'party_id'    => 'required|exists:parties',
-            'motion_id'    => 'required|exists:motions',
+            'party_id'    => 'required|exists:parties,id',
+            'motion_id'    => 'required|exists:motions,id',
             'vote_value'    => 'required',
         ]);
         
@@ -181,8 +182,8 @@ class VoteController extends Controller
     public function update(Request $request, Vote $vote)
     {
         $request->validate([
-            'party_id'    => 'required|exists:parties',
-            'motion_id'    => 'required|exists:motions',
+            'party_id'    => 'required|exists:parties,id',
+            'motion_id'    => 'required|exists:motions,id',
             'vote_value'    => 'required',
         ]);
         

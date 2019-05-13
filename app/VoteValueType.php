@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Seatmod extends Model
+class VoteValueType extends Model
 {
     // No timestamp
     public $timestamps = false;
+    
+    protected $table = 'vote_value_types';
     
     /**
      * The attributes that are mass assignable.
@@ -15,10 +17,6 @@ class Seatmod extends Model
      * @var array
      */
     protected $fillable = [
-        'party_id', 'modifier',
+        'name',
     ];
-    
-    public function party() {
-        return $this->belongsTo(Party::class);
-    }
 }
