@@ -73,6 +73,19 @@ td {
 .flex-container {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.resultBlock {
+	margin: 10px;
+	font-weight: bold;
+	font-size:15px;
+}
+
+#prevMotion {
+	font-weight: bold;
+	font-size:15px;
 }
 
 svg {
