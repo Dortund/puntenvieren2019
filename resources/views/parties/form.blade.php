@@ -16,7 +16,7 @@ use App\User;
 		{{ method_field($method) }}
 
 			<div class="form-group row">
-				<label for="name" class="col-sm-4 col-form-label text-md-right">Name</label>
+				<label for="name" class="col-sm-4 col-form-label text-md-right">Receipt Name</label>
 
 				<div class="col-md-6">
 					<input id="name" type="text" class="form-control @if($errors->has('name')) is-invalid @endif" name="name" value="{{ isset($party) ? $party->name : old('name') }}" required autofocus>
@@ -24,6 +24,20 @@ use App\User;
 					@if ($errors->has('name'))
 						<span class="invalid-feedback">
 							<strong>{{ $errors->first('name') }}</strong>
+						</span>
+					@endif
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="screenname" class="col-sm-4 col-form-label text-md-right">Screenname</label>
+
+				<div class="col-md-6">
+					<input id="screenname" type="text" class="form-control @if($errors->has('screenname')) is-invalid @endif" name="screenname" value="{{ isset($party) ? $party->screenname : old('screenname') }}" required>
+
+					@if ($errors->has('screenname'))
+						<span class="invalid-feedback">
+							<strong>{{ $errors->first('screenname') }}</strong>
 						</span>
 					@endif
 				</div>

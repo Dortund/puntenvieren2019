@@ -51,10 +51,15 @@ class PartyController extends Controller
             'name'    => 'required|max:45',
             'screenname' => 'required|max:45',
             'colour'    => 'required|max:191',
-            'avatar'    => 'required|max:191',
+            'avatar'    => 'nullable',
         ]);
         
         $party = new Party($request->all());
+
+        if ($request->hasFile('avatar')) {
+        
+        }
+        $party->avatar = "/";
         $party->save();
         
         return redirect()->route('admin.parties.index')->with('messages', [trans('admin/resources.create.status-ok')]);
@@ -99,15 +104,17 @@ class PartyController extends Controller
             'name'    => 'required|max:45',
             'screenname' => 'required|max:45',
             'colour'    => 'required|max:191',
+            'avatar'    => 'nullable',
         ]);
         
         $party->fill($request->all());
         
         // TODO Setup proper image handling
         if ($request->hasFile('avatar')) {
-            $party->avatar = "/";
+            
         }
         
+        $party->avatar = "/";
         $party->update();
         
         return redirect()->route('admin.parties.index')->with('messages', [trans('admin/resources.update.status-ok' )]);
