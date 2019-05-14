@@ -12,7 +12,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(PartiesTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
+        if(config('app.env') === 'production') {
+           $this->call(UsersTableSeederProduction::class);
+        }
+        else {
+             $this->call(UsersTableSeeder::class);
+        }
         $this->call(DefaultVotesSeeder::class);
         $this->call(VoteValueTypesSeeder::class);
         $this->call(MultipliersSeeder::class);
