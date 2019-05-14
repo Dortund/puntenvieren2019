@@ -16,6 +16,7 @@ class CreatePartiesTable extends Migration
         Schema::create('parties', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('screenname');
             $table->string('colour');
             $table->string('avatar');
         });

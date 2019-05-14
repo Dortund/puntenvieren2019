@@ -1,0 +1,99 @@
+html, body {
+    background-color: #fff;
+    color: #000000;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    height: 100vh;
+    margin: 0;
+}
+
+.flex-center {
+    padding-top: 30px;
+    padding-left: 10px;
+}
+
+.position-ref {
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+#parliamentContainer {
+    float:left;
+}
+
+#listContainer {
+    float:left;
+}
+
+#motions {
+    text-align: center;
+}
+
+td {
+    font-size: 25px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+#motion {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#countdownTimer {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.resultBlock {
+	margin: 10px;
+	font-weight: bold;
+	font-size:15px;
+}
+
+#prevMotion {
+	font-weight: bold;
+	font-size:15px;
+}
+
+svg {
+}
+svg.seat {
+    cursor: pointer;
+    transition: all 800ms;
+}
+/* common */
+svg .seat.vacant { fill: #FFFFFF }
+svg .seat.no-party { fill: #909090 }

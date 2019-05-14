@@ -12,27 +12,28 @@ class PartiesTableSeeder extends Seeder
      */
     public function run()
     {
-        self::insert('Octopus');
-        self::insert('Kurk');
-        self::insert('Quast');
-        self::insert('Schranz');
-        self::insert('Spetter');
-        self::insert('Asene');
-        self::insert('Apollo');
-        self::insert('Chaos');
-        self::insert('Kielzog');
-        self::insert('Krat');
-        self::insert('McClan');
-        self::insert('Nobel');
-        self::insert('Scorpios');
-        self::insert('Fabula');
-        self::insert('Bestuur 122');
-        self::insert('OC19');
+        self::insert('Octopus', '#009900');
+        self::insert('Kurk', '#990000');
+        self::insert('Quast', '#000099');
+        self::insert('Schranz', '#999900');
+        self::insert('Spetter', '#009999');
+        self::insert('Asene', '#990099');
+        self::insert('Apollo', '#33FF99');
+        self::insert('Chaos', '#FF8000');
+        self::insert('Kielzog', '#99004C');
+        self::insert('Krat', '#808080');
+        self::insert('McClan', '#00FF00');
+        self::insert('Nobel', '#0000FF');
+        self::insert('Scorpios', '#FF0000');
+        self::insert('Fabula', '#FF00FF');
+        self::insert('Bestuur 122', '#00FFFF');
+        self::insert('OC19', '#FFFF00');
     }
     
     private function insert($name, $colour = '#00FF00', $avatar = '/') {
         DB::table('parties')->insert([
             'name' => $name,
+            'screenname' => $name,
             'colour' => $colour,
             'avatar' => $avatar,
         ]);

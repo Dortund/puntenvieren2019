@@ -48,7 +48,8 @@ class PartyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'    => 'required|unique:users|max:45',
+            'name'    => 'required|max:45',
+            'screenname' => 'required|max:45',
             'colour'    => 'required|max:191',
             'avatar'    => 'required|max:191',
         ]);
@@ -95,7 +96,9 @@ class PartyController extends Controller
     public function update(Request $request, Party $party)
     {
         $request->validate([
-            'name'    => 'required|unique:users,username,' . $party->id . '|max:45',
+            'name'    => 'required|max:45',
+            'screenname' => 'required|max:45',
+            'colour'    => 'required|max:191',
         ]);
         
         $party->fill($request->all());
