@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Seatmod;
+use App\Turnout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,6 +36,7 @@ class SeatmodController extends Controller
     {
         return view('seatmods.create')
             ->with('seatmod', $seatmod)
+            ->with('turnout', Turnout::orderBy('entry_added', 'desc')->first())
             ->with('method', 'POST')
             ->with('route', route('admin.seatmods.store', [$seatmod]))
             ->with('submitBtn', trans('admin/resources.create.save'));
@@ -80,6 +82,7 @@ class SeatmodController extends Controller
     {
         return view('seatmods.edit')
             ->with('seatmod', $seatmod)
+            ->with('turnout', Turnout::orderBy('entry_added', 'desc')->first())
             ->with('method', 'PUT')
             ->with('route', route('admin.seatmods.update', [$seatmod]))
             ->with('submitBtn', trans('admin/resources.update.save'));

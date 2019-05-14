@@ -42,6 +42,14 @@ use App\User;
 			</div>
 
 			<div class="form-group row">
+				<label for="seatValue" class="col-sm-4 col-form-label text-md-right">Seat Value</label>
+
+				<div class="col-md-6">
+					<label for="seatValue" class="col-form-label text-md-left">{{ (isset($turnout->points) ? $turnout->points : 0) / 750}} points / Seat</label>
+				</div>
+			</div>
+
+			<div class="form-group row">
 				<label for="modifier" class="col-sm-4 col-form-label text-md-right">Modifier</label>
 
 				<div class="col-md-6">

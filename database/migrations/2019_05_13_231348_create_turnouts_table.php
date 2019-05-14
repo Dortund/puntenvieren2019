@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTurnoutTable extends Migration
+class CreateTurnoutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTurnoutTable extends Migration
      */
     public function up()
     {
-        Schema::create('turnout', function (Blueprint $table) {
+        Schema::create('turnouts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->float('points');
             $table->dateTime('entry_added');
