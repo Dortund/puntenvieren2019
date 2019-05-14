@@ -134,4 +134,4 @@ var setData = function(d) {
 
 d3.json(window.location.href + '/seatData', setData);
 
-setInterval(function() { d3.json(window.location.href + '/seatData', setData); }, 3000)
+setInterval(function() { d3.json(window.location.href + '/seatData', setData); }, 10000)

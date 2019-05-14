@@ -66,8 +66,6 @@ d3.parliament = function() {
             /* compute the cartesian and polar coordinates for each seat */
             var rowWidth = (outerParliamentRadius - innerParliementRadius) / nRows;
             var seats = [];
-            var seatAverages = {};
-            seatAverages.number = 0;
             (function() {
                 var seatsToRemove = maxSeatNumber - nSeats;
                 for (var i = 0; i < nRows; i++) {
@@ -86,11 +84,6 @@ d3.parliament = function() {
                             y: s.polar.r * Math.sin(s.polar.teta)
                         };
                         seats.push(s);
-                        
-                        // calculate party average
-                        seatAverages.x = (seatAverages.x * seatAverages.number) /  (seatAverages.number + 1);
-                        seatAverages.y = (seatAverages.y * seatAverages.number) /  (seatAverages.number + 1);
-                        seatAverages.number = seatAverages.number + 1;
                     }
                 };
             })();
@@ -99,11 +92,21 @@ d3.parliament = function() {
             seats.sort(function(a,b) {
                 return a.polar.teta - b.polar.teta || b.polar.r - a.polar.r;
             });
-
+            
+            //custom
+            var allAverages = [];
+            
             /* fill the seat objects with data of its party and of itself if existing */
             (function() {
                 var partyIndex = 0;
                 var seatIndex = 0;
+                
+                //custom
+                var seatAverages = {};
+                seatAverages.cartesian = {x:0, y:0};
+                seatAverages.polar = {r:0,teta:0};
+                seatAverages.number = 0;
+                
                 seats.forEach(function(s) {
                     /* get current party and go to the next one if it has all its seats filled */
                     var party = d[partyIndex];
@@ -112,6 +115,15 @@ d3.parliament = function() {
                         partyIndex++;
                         seatIndex = 0;
                         party = d[partyIndex];
+                        
+                        
+                        //custom
+                        allAverages.push(seatAverages);
+                        
+                        seatAverages = {};
+                        seatAverages.cartesian = {x:0, y:0};
+                        seatAverages.polar = {r:0,teta:0};
+                        seatAverages.number = 0;
                     }
 
                     /* set party data */
@@ -119,9 +131,19 @@ d3.parliament = function() {
                     s.data = typeof party.seats === 'number' ? null : party.seats[seatIndex];
 
                     seatIndex++;
+                    
+                    
+                    // calculate party average //custom
+                    seatAverages.cartesian.x = (seatAverages.cartesian.x * seatAverages.number + s.cartesian.x) /  (seatAverages.number + 1);
+                    seatAverages.cartesian.y = (seatAverages.cartesian.y * seatAverages.number + s.cartesian.y) /  (seatAverages.number + 1);
+                    seatAverages.polar.r = (seatAverages.polar.r * seatAverages.number + s.polar.r) /  (seatAverages.number + 1);
+                    seatAverages.polar.teta = (seatAverages.polar.teta * seatAverages.number + s.polar.teta) /  (seatAverages.number + 1);
+                    seatAverages.number = seatAverages.number + 1;
                 });
             })();
-
+            console.log(allAverages);
+            
+            seats.push(allAverages);
 
             /***
              * helpers to get value from seat data */
@@ -130,8 +152,17 @@ d3.parliament = function() {
                 c += (d.party && d.party.id) || "";
                 return c.trim();
             };
-            var seatX = function(d) { return d.cartesian.x; };
-            var seatY = function(d) { return d.cartesian.y; };
+            //var seatX = function(d) { console.log(d.cartesian); return d.cartesian == null ? 0 : d.cartesian.x; };
+            var seatX = function(d) {
+            	if (d.cartesian == null) {
+            		console.log(d.cartesian)
+            		return 0;
+            	}
+	            else {
+	            	 return  d.cartesian.x;
+	            }
+	        }
+            var seatY = function(d) { return d.cartesian == null ? 0 : d.cartesian.y; };
             var seatRadius = function(d) {
                 var r = 0.4 * rowWidth;
                 if (d.data && typeof d.data.size === 'number') {
@@ -155,11 +186,12 @@ d3.parliament = function() {
             var circles = container.selectAll(".seat").data(seats);
             circles.attr("class", seatClasses);
             
-            var avg = container.selectAll(".tag").data(seatAverges);
-            var avgEnter = avg.enter().append("circle"):
+            
+            /*var avg = svg.selectAll(".tag").data(seatAverages);
+            var avgEnter = avg.enter().append("circle");
         	avgEnter.attr("cx", function(d) { return d.x; });
             avgEnter.attr("cy", function(d) { return d.y; });
-            avgEnter.attr("r", 20);
+            avgEnter.attr("r", 20);*/
             
 
             /* animation adding seats to the parliament */

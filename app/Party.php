@@ -41,7 +41,8 @@ class Party extends Authenticatable
         else {
             //TODO remove rand
             //return 0;
-            return mt_rand(0, 92);
+            //return mt_rand(0, 92);
+            return 2;
         }
     }
     
@@ -53,7 +54,7 @@ class Party extends Authenticatable
         else {
             //TODO remove rand
             //return 0;
-            return mt_rand(0, 92);
+            return 2;
         }
     }
     
