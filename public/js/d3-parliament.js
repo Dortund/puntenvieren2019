@@ -66,12 +66,15 @@ d3.parliament = function() {
             /* compute the cartesian and polar coordinates for each seat */
             var rowWidth = (outerParliamentRadius - innerParliementRadius) / nRows;
             var seats = [];
+            var seatAverages = {};
+            seatAverages.number = 0;
             (function() {
                 var seatsToRemove = maxSeatNumber - nSeats;
                 for (var i = 0; i < nRows; i++) {
                     var rowRadius = innerParliementRadius + rowWidth * (i + 0.5);
                     var rowSeats = Math.floor(Math.PI * (b + i)) - Math.floor(seatsToRemove / nRows) - (seatsToRemove % nRows > i ? 1 : 0);
                     var anglePerSeat = Math.PI / rowSeats;
+                    var average = {};
                     for (var j = 0; j < rowSeats; j++) {
                         var s = {};
                         s.polar = {
@@ -83,6 +86,11 @@ d3.parliament = function() {
                             y: s.polar.r * Math.sin(s.polar.teta)
                         };
                         seats.push(s);
+                        
+                        // calculate party average
+                        seatAverages.x = (seatAverages.x * seatAverages.number) /  (seatAverages.number + 1);
+                        seatAverages.y = (seatAverages.y * seatAverages.number) /  (seatAverages.number + 1);
+                        seatAverages.number = seatAverages.number + 1;
                     }
                 };
             })();
@@ -146,6 +154,13 @@ d3.parliament = function() {
             /* all the seats as circles */
             var circles = container.selectAll(".seat").data(seats);
             circles.attr("class", seatClasses);
+            
+            var avg = container.selectAll(".tag").data(seatAverges);
+            var avgEnter = avg.enter().append("circle"):
+        	avgEnter.attr("cx", function(d) { return d.x; });
+            avgEnter.attr("cy", function(d) { return d.y; });
+            avgEnter.attr("r", 20);
+            
 
             /* animation adding seats to the parliament */
             var circlesEnter = circles.enter().append("circle");
