@@ -31,6 +31,10 @@ class Party extends Authenticatable
     public function party() {
         return $this->hasMany(User::class);
     }
+
+    public function seatmods() {
+        return $this->hasMany(Seatmod::class);
+    }
     
     public function getSeatsAttribute()
     {
