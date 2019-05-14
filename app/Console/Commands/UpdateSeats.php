@@ -6,6 +6,7 @@ use App\Barkas\Bestelling;
 use App\SeatBase;
 use App\Multiplier;
 use App\Party;
+use App\Turnout;
 use Illuminate\Console\Command;
 
 class UpdateSeats extends Command
@@ -39,7 +40,7 @@ class UpdateSeats extends Command
      *
      * @return mixed
      */
-    public function handle()
+    static public function handle()
     {
         $parties = Party::all();
 
@@ -60,7 +61,7 @@ class UpdateSeats extends Command
         $totaal = 0;
         $party_zuips = [];
         foreach ($party_bestellingen as $party_bestelling) {
-            echo '<b>'.$party_bestelling[0]->name.'</b>'.'<br>';
+            //echo '<b>'.$party_bestelling[0]->name.'</b>'.'<br>';
             $party = $party_bestelling[0];
             $party_totaal = 0;
             foreach ($party_bestelling[1] as $bestelling) {
@@ -75,11 +76,21 @@ class UpdateSeats extends Command
                     $party_totaal += $multiplier->value * $aantal;
                 }
             }
-            //TODO: SeatMod toepassen
-            //TODO: min(0) max(party_totaal)
+            $seatmods = $party->seatmods;
+            foreach($seatmods as $seatmod) {
+                $party_totaal = $party_totaal + $seatmod->modifier;
+                $party_totaal = max(0, $party_totaal);
+            }
             $party_zuips[] = [$party, $party_totaal];
             $totaal += $party_totaal;
         }
+
+        $update_time = Carbon::now();
+
+        $turnout = new Turnout;
+        $turnout->points = $totaal;
+        $turnout->entry_added = $update_time;
+        $turnout->save();
 
         foreach ($party_zuips as $party_zuip) {
             $party = $party_zuip[0];
@@ -90,12 +101,10 @@ class UpdateSeats extends Command
             }
             $seatbase = new Seatbase;
             $seatbase->party_id = $party->id;
+            $seatbase->turnout_id = $turnout->id;
             $seatbase->seats = $amount;
-            $seatbase->entry_added = Carbon::now();
-            echo $seatbase->id;
+            $seatbase->entry_added = $update_time;
             $seatbase->save();
-            echo $seatbase->id;
-            echo '<br>';
         }
 
     }
