@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
         self::insert('admin', 'admin', true);
         
         // TODO add other users for the parties
-        self::insert('kielzog', 'kielzog', false, 9);
+        self::insert('kielzog', 'kielzog', false, 11);
     }
     
     private function insert($username, $password, $is_admin, $party_id = null) {
