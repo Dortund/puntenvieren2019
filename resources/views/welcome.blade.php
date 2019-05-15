@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <script src="{{ asset('js/d3.min.js') }}"></script>
-        <script src="{{ asset('js/d3-parliament.js') }}"></script>
+        <script src="{{ secure_asset('js/d3.min.js') }}"></script>
+        <script src="{{ secure_asset('js/d3-parliament.js') }}"></script>
 
         <title>Puntenvieren 2019</title>
 
@@ -13,7 +13,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
-        <link href="{{ asset('css/interface.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('css/interface.css') }}" rel="stylesheet">
         <style id="seatColours"></style>
     </head>
     <body>
@@ -58,6 +58,6 @@
             </div>
         </div>
         
-        <script src="{{ asset('js/interface.js') }}"></script>
+        <script src="{{ secure_asset('js/interface.js') }}"></script>
     </body>
 </html>

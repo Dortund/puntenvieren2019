@@ -3,10 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Barkas\Bestelling;
-use App\SeatBase;
+use App\Seatbase;
 use App\Multiplier;
 use App\Party;
 use App\Turnout;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class UpdateSeats extends Command
@@ -48,7 +49,7 @@ class UpdateSeats extends Command
 
         foreach ($parties as $party) {
             $bestellingen = Bestelling::whereHas('bon', function ($q) use($party) {
-                $q->whereDate('Bon_Datum', '=', '2019-5-8')
+                $q->whereDate('Bon_Datum', '=', '2019-5-15')
                     ->whereHas('debiteur', function ($q) use($party) {
                         $q->where('Debiteur_Naam', 'like', '%'.$party->name.'%');
                     });

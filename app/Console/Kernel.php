@@ -24,6 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('seats:update')
+            ->everyMinute();
+        $schedule->command('votes:tally')
+            ->everyMinute();
         // $schedule->command('inspire')
         //          ->hourly();
     }

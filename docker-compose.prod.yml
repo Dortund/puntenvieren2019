@@ -1,12 +1,29 @@
 version: '2'
 services:
   app:
+    image: registry.gitlab.com/delftschestudentenbond/puntenvieren2019/app:latest
     build:
       context: .
       dockerfile: Dockerfile.app
     container_name: app
     environment:
+      TZ: 'Europe/Amsterdam'
       SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    networks:
+      - app-network
+    volumes:
+      - .env-docker:/var/www/.env
+  cron:
+    image: registry.gitlab.com/delftschestudentenbond/puntenvieren2019/cron:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.cron
+    container_name: cron
+    environment:
+      TZ: 'Europe/Amsterdam'
+      SERVICE_NAME: cron
       SERVICE_TAGS: dev
     working_dir: /var/www
     networks:
@@ -15,6 +32,7 @@ services:
       - .env-docker:/var/www/.env
 
   webserver:
+    image: registry.gitlab.com/delftschestudentenbond/puntenvieren2019/webserver:latest
     build:
       context: .
       dockerfile: Dockerfile.nginx
@@ -25,12 +43,14 @@ services:
       - app-network
 
   db:
+    image: registry.gitlab.com/delftschestudentenbond/puntenvieren2019/db:latest
     build:
       context: ./mysql
     container_name: db
     ports:
       - "3306:3306"
     environment:
+      TZ: 'Europe/Amsterdam'
       MYSQL_DATABASE: puntenvieren2019
       MYSQL_USER: laraveluser
       MYSQL_PASSWORD: mysql_user_password

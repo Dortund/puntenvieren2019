@@ -16,6 +16,7 @@ class CreateSeatbasesTable extends Migration
         Schema::create('seatbases', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('party_id');
+            $table->unsignedBigInteger('turnout_id');
             $table->integer('seats');
             $table->dateTime('entry_added');
         });

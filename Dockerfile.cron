@@ -41,9 +41,22 @@ COPY . /var/www
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
 
-# Change current user to www
-USER www
+# Copy hello-cron file to the cron.d directory
+COPY afscheid-cron /etc/cron.d/afscheid-cron
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/afscheid-cron
+
+# Change current user to www
+
+# Apply cron job
+RUN crontab /etc/cron.d/afscheid-cron
+
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
+RUN sed -i '/session    required     pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/cron
+
+# Run the command on container startup
+CMD ["cron", "-f"]
+
