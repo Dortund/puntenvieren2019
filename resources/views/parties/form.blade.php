@@ -47,7 +47,7 @@ use App\User;
 				<label for="colour" class="col-sm-4 col-form-label text-md-right">Colour</label>
 
 				<div class="col-md-6">
-					<input id="colour" type="color" class="form-control @if($errors->has('colour')) is-invalid @endif" name="colour" value="">
+					<input id="colour" type="color" class="form-control @if($errors->has('colour')) is-invalid @endif" name="colour" value="{{ isset($party) ? $party->colour : old('colour') }}">
 
 					@if ($errors->has('colour'))
 						<span class="invalid-feedback">
