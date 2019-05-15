@@ -46,6 +46,7 @@
             <div class="content">
             	<div id="parliamentContainer">
 	                <svg width="600" height="300"></svg>
+	                <div id="legend">+ <<--  Anci&eumlnniteit  -->> -</div>
 	                <div id="motions">
 	                	<div>
         	                <div style="font-weight:bold">Huidige Motie:</div>

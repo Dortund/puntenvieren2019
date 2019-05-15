@@ -60,6 +60,11 @@ html, body {
     margin-bottom: 30px;
 }
 
+#legend {
+	text-align: center;
+	font-size: 18px;
+}
+
 #parliamentContainer {
     float:left;
 }
