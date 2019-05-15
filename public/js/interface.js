@@ -25,7 +25,7 @@ var x = setInterval(function() {
 
   // If the count down is finished, write some text 
   if (distance < 0) {
-    document.getElementById("countdownTimer").innerHTML = "EXPIRED";
+    document.getElementById("countdownTimer").innerHTML = "Laatste kans om te stemmen";
   }
 }, 1000);
 
@@ -75,7 +75,7 @@ var setData = function(d) {
 		
 		var row = table.insertRow(i);
 		var cell = row.insertCell();
-		cell.innerHTML = '<svg width="25" height="25"><circle cx="12" cy="12" r="12" class="seat ' + elem.name + '" /></svg';
+		cell.innerHTML = '<svg width="25" height="25"><circle cx="12" cy="12" r="12" class="seat ' + elem.id + '" /></svg';
 		cell = row.insertCell();
 		cell.innerHTML = elem.screenname;
 		cell = row.insertCell();

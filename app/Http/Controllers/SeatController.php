@@ -26,12 +26,14 @@ class SeatController extends Controller
             $prevMotion = $prevMotion->toArray();
         }
         
+        //$dbTime = \DB::select(\DB::raw('SELECT NOW() AS end_time'));
         
         $res = [
             'motion' => $motion,
             'prevMotion' => $prevMotion,
             'results' => $results,
             'parties' => $parties,
+            //'dbTime' => $dbTime[0]->end_time,
         ];
         
         //return response()->json(json_decode($data));

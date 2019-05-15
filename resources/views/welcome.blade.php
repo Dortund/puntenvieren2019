@@ -4,8 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <script src="{{ secure_asset('js/d3.min.js') }}"></script>
-        <script src="{{ secure_asset('js/d3-parliament.js') }}"></script>
+        @if (config('app.env') === 'production')
+            <script src="{{ secure_asset('js/d3.min.js') }}"></script>
+            <script src="{{ secure_asset('js/d3-parliament.js') }}"></script>
+        @else
+            <script src="{{ asset('js/d3.min.js') }}"></script>
+            <script src="{{ asset('js/d3-parliament.js') }}"></script>
+        @endif
 
         <title>Puntenvieren 2019</title>
 
@@ -13,11 +18,17 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
-        <link href="{{ secure_asset('css/interface.css') }}" rel="stylesheet">
+        @if (config('app.env') === 'production')
+            <link href="{{ secure_asset('css/interface.css') }}" rel="stylesheet">
+        @else
+            <link href="{{ asset('css/interface.css') }}" rel="stylesheet">
+        @endif
         <style id="seatColours"></style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+        	<div class="bg"></div>
+        	
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -58,6 +69,11 @@
             </div>
         </div>
         
-        <script src="{{ secure_asset('js/interface.js') }}"></script>
+        
+        @if (config('app.env') === 'production')
+            <script src="{{ secure_asset('js/interface.js') }}"></script>
+        @else
+            <script src="{{ asset('js/interface.js') }}"></script>
+        @endif
     </body>
 </html>

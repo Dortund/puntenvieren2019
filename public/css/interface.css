@@ -10,6 +10,9 @@ html, body {
 .flex-center {
     padding-top: 30px;
     padding-left: 10px;
+    
+	position: relative;
+	z-index: 1;
 }
 
 .position-ref {
@@ -22,6 +25,21 @@ html, body {
 }
 
 .content {
+}
+
+.flex-center .bg {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url(images/euflag.jpg) center center;
+    background-color: #003399;
+    background-repeat: no-repeat;
+    opacity:0.3;
+    width: 100%;
+    height: 700px;
 }
 
 .title {
