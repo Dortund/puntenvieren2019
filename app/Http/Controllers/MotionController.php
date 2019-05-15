@@ -20,7 +20,7 @@ class MotionController extends Controller
      */
     public function index()
     {
-        $motions = Motion::paginate(20);
+        $motions = Motion::orderBy('time_of_vote', 'desc')->paginate(20);
         
         return view('motions.index')
         ->with('motions', $motions);

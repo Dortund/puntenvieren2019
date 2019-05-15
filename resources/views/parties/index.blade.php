@@ -16,7 +16,7 @@
 		<a id="createBtn" class="btn btn-primary" href="{{ route('admin.parties.create') }}">{{ trans('admin/resources.view.create') }}</a>
 	</div>
 
-	<h1>Users</h1>
+	<h1>Parties</h1>
 
 	<table class="table">
 		<thead>

@@ -28,6 +28,32 @@ use App\User;
 					@endif
 				</div>
 			</div>
+			
+			<div class="form-group row">
+				<label for="party_id" class="col-sm-4 col-form-label text-md-right">Party</label>
+				
+				<div class="col-md-6">
+					<select id="party_id" class="form-control @if($errors->has('party_id')) is-invalid @endif" name="party_id">
+					@if (!isset($user->party_id))
+						<option selected value="">No Party Selected</option>
+					@endif
+					
+					@foreach(App\Party::all() as $party)
+						<option
+							value="{{$party->id}}"
+							{{ isset($user->party_id) && $user->party_id == $party->id ? "selected" : "" }}>
+							{{ $party->name }}
+						</option>
+					@endforeach
+					</select>
+
+					@if ($errors->has('party_id'))
+						<span class="invalid-feedback">
+							<strong>{{ $errors->first('party_id') }}</strong>
+						</span>
+					@endif
+				</div>
+			</div>
 
 			<div class="form-group row">
 				<label for="password" class="col-sm-4 col-form-label text-md-right">{{ trans('admin/users.cols.password') }}</label>
