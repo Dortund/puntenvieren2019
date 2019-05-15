@@ -20,9 +20,9 @@ class PartiesTableSeeder extends Seeder
         self::insert('Asene', '#990099');
         self::insert('Apollo', '#33FF99');
         self::insert('Chaos', '#FF8000');
-        self::insert('Kielzog', '#99004C');
         self::insert('Krat', '#808080');
         self::insert('McClan', '#00FF00');
+        self::insert('Kielzog', '#99004C');
         self::insert('Nobel', '#0000FF');
         self::insert('Scorpios', '#FF0000');
         self::insert('Fabula', '#FF00FF');
